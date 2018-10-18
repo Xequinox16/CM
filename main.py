@@ -16,7 +16,7 @@ Config = {
     }
 
 
-    title = "       CameraMan ::: BUILT {12:48 AM :: 10/18/2018}       "
+title = "       CameraMan ::: BUILT {12:48 AM :: 10/18/2018}       "
 os.system("title CM ::: BUILT {1:06 AM :: 10/18/2018}")
 #Coroutine Taking Over Entire Script 
 #async def luuuup():
