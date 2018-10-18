@@ -1,9 +1,10 @@
 import time
 import json
 import sys
+import asyncio
 from datetime import datetime
 import os
-os.system("title CameraMan")
+import shutil
 
 Config = {
     'DaysOldTolerated': 7,
@@ -15,6 +16,17 @@ Config = {
     }
 
 
+
+def luuuup():
+    title = "       CameraMan ::: BUILT {12:48 AM :: 10/18/2018}       "
+    def shift(msg):
+        msg = msg[1:] + msg[0]
+        return(msg)
+    while True:
+        time.sleep(0.09)
+        title = shift(title)
+        os.system("title "+"["+title+"]")
+asyncio.async(luuuup())
 
 
 
@@ -123,9 +135,8 @@ def clean(listyBoi):
         for i in reasons:
             print("[Deleting: ("+stringifylist(i_date)+") because of: ("+i+")")
         if len(reasons) > 0:
-            for file in os.listdir(CurrentDirectory+"/"+stringifylist(i_date)):
-                os.remove(CurrentDirectory+"/"+stringifylist(i_date)+"/"+file)
-            os.rmdir(CurrentDirectory+"/"+stringifylist(i_date))
+            shutil.rmtree(CurrentDirectory+"/"+stringifylist(i_date))
+            # os.rmdir(CurrentDirectory+"/"+stringifylist(i_date))
         else:
             print("Nothing In "+CurrentDirectory+" Matches Deletion Requirements.")
 
@@ -147,24 +158,71 @@ def drawSettingsMenu():
         choice = input(">: ")
         if choice == str(1):
             newValue = input("Enter a new value: ")
+            try:
+                int(newValue)
+                if int(newValue) <= 0:
+                    raise Exception("cannot be lower or equal to 0")
+            except Exception as Ex:
+                if Ex.args[0] == "cannot be lower or equal to 0":
+                    input("[Error]: Cannot be lower or equal to 0, Press any key to continue.")
+                else:
+                    print("[Error]: Unknown Error, Press any key to continue.")
+            drawSettingsMenu()
+
+
             Config["RefreshRate"] = newValue
             SaveSettings()
         elif choice == str(2):
             newValue = input("Enter a new value: ")
+            try:
+                int(newValue)
+                if int(newValue) <= 0:
+                    raise Exception("cannot be lower or equal to 0")
+            except Exception as Ex:
+                if Ex.args[0] == "cannot be lower or equal to 0":
+                    input("[Error]: Cannot be lower or equal to 0, Press any key to continue.")
+                else:
+                    print("[Error]: Unknown Error, Press any key to continue.")
+            drawSettingsMenu()
+
+
             Config["DaysOldTolerated"] = newValue
             SaveSettings()
         elif choice == str(3):
             newValue = input("Enter a new value: ")
+            try:
+                int(newValue)
+                if int(newValue) < 0:
+                    raise Exception("cannot be lower than 0")
+            except Exception as Ex:
+                if Ex.args[0] == "cannot be lower than 0":
+                    input("[Error]: Cannot be lower than 0, Press any key to continue.")
+                else:
+                    print("[Error]: Unknown Error, Press any key to continue.")
+            drawSettingsMenu()
+
+
             Config["MonthsOldTolerated"] = newValue
             SaveSettings()
         elif choice == str(4):
             newValue = input("Enter a new value: ")
+            try:
+                int(newValue)
+                if int(newValue) < 0:
+                    raise Exception("cannot be lower than 0")
+            except Exception as Ex:
+                if Ex.args[0] == "cannot be lower than 0":
+                    input("[Error]: Cannot be lower than 0, Press any key to continue.")
+                else:
+                    print("[Error]: Unknown Error, Press any key to continue.")
+            drawSettingsMenu()
             Config["YearsOldTolerated"] = newValue
             SaveSettings()
         elif choice == str(5):
             print("     ---------------------------------")
             print("     [1]: Add Item To List")
             print("     [2]: Remove Item From List")
+            print("     [3]: List Items")
             print("     ---------------------------------")
             newValue = input(":> ")
             if newValue == str(1):
@@ -190,7 +248,28 @@ def drawSettingsMenu():
                 for i in range(len(Config["CameraDirectories"])):
                     print("["+str(i)+"]"+":    "+Config["CameraDirectories"][i])
                 newValue = input("Delete #: ")
+
+                try:
+                    int(newValue)
+                    if int(newValue) < 0:
+                        raise Exception("Index too low")
+                    elif int(newValue) > len(Config["CameraDirectories"]):
+                        raise Exception("Index too high")
+                except Exception as Ex:
+                    if Ex.args[0] == "Index too low":
+                        input("[Error]: Index too low, Press any key to continue.")
+                    elif Ex.args[0] == "Index too high":
+                        input("[Error]: Index too high, Press any key to continue.")
+                    else:
+                        input("Unexpected Error, Press any key to continue.")
+                    drawSettingsMenu()
+
+
                 Config["CameraDirectories"].remove(Config["CameraDirectories"][int(newValue)])
+            elif newValue == str(3):
+                for i in range(len(Config["CameraDirectories"])):
+                    print("["+str(i)+"]"+":    "+Config["CameraDirectories"][i])
+                input("Press any key to continue")
             SaveSettings()
         elif choice == str(6):
             drawMenu()
