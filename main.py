@@ -16,17 +16,19 @@ Config = {
     }
 
 
-
-def luuuup():
     title = "       CameraMan ::: BUILT {12:48 AM :: 10/18/2018}       "
-    def shift(msg):
-        msg = msg[1:] + msg[0]
-        return(msg)
-    while True:
-        time.sleep(0.09)
-        title = shift(title)
-        os.system("title "+"["+title+"]")
-asyncio.async(luuuup())
+os.system("title CM ::: BUILT {1:06 AM :: 10/18/2018}")
+#Coroutine Taking Over Entire Script 
+#async def luuuup():
+#    title = "       CM ::: BUILT {12:48 AM :: 10/18/2018}       "
+#    def shift(msg):
+#        msg = msg[1:] + msg[0]
+#        return(msg)
+#    while True:
+#        await asyncio.sleep(0.09)
+#        title = shift(title)
+#        os.system("title "+"["+title+"]")
+#asyncio.run(luuuup())
 
 
 
